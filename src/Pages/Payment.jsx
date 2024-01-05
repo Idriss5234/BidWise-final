@@ -16,25 +16,40 @@ function Payment() {
           <button className="btns c">Goggle Pay</button>
         </div>
         <div className="info">
-          <hr className="first" />
           <p className="or">or</p>
-          <hr className="second" />
           <h3>Contact information</h3>
-          <input type="email" placeholder="Email" className="payment-input"/>
+          <input type="email" placeholder="Email" className="payment-input" />
           <br />
-          <input type="checkbox" className="check"/>
+          <input type="checkbox" className="check" />
           <span className="payment-span"> Email me with news and offers</span>
           <h3>Shipping adress</h3>
-          <input type="text" placeholder="Country/region" className="payment-input"/> <br />
+          <input
+            type="text"
+            placeholder="Country/region"
+            className="payment-input"
+          />{" "}
+          <br />
           <input type="text" placeholder="First Name" />
           <br />
-          <input type="text" placeholder="Adress (ex: 12 Main Street)" className="payment-input"/>
+          <input
+            type="text"
+            placeholder="Adress (ex: 12 Main Street)"
+            className="payment-input"
+          />
           <br />
-          <input type="text" placeholder="Appartment, suite.....(optional)" className="payment-input"/>
+          <input
+            type="text"
+            placeholder="Appartment, suite.....(optional)"
+            className="payment-input"
+          />
           <br />
-          <input type="text" placeholder="Postal code" className="payment-input"/>
+          <input
+            type="text"
+            placeholder="Postal code"
+            className="payment-input"
+          />
           <br />
-          <input type="tel" placeholder="+212" className="payment-input"/>
+          <input type="tel" placeholder="+212" className="payment-input" />
           <br />
           <div className="botonat">
             <button className="cart">Return</button>
@@ -55,13 +70,13 @@ function Payment() {
               <h2>Total</h2>
             </div>
             <div className="nbrs">
-              <p>{selectedProduct.price + ' MAD'}</p>
+              <p>{selectedProduct.price + " MAD"}</p>
               <p>1</p>
               <p id="app-coupon-p">add coupon here</p>
               <p>49 MAD</p>
               <hr className="str" />
 
-              <h2>{(Number(selectedProduct.price) + 49) + ' MAD'}</h2>
+              <h2>{Number(selectedProduct.price) + 49 + " MAD"}</h2>
             </div>
           </div>
           <h6 className="payment-h6">
