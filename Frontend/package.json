@@ -1,12 +1,10 @@
 {
-  "homepage": "https://ziyad-mabrouk.github.io/BidWise/",
+  "homepage": "https://github.com/Idriss5234/BidWise-final",
   "name": "bidwise",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
-    "@material-ui/core": "^4.12.4",
-    "@material-ui/icons": "^4.11.3",
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.2.2",
     "@testing-library/jest-dom": "^5.17.0",
@@ -14,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.4",
     "firebase": "^10.7.1",
+    "gh-pages": "^6.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.2",
@@ -46,8 +45,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^6.1.1"
   }
 }
