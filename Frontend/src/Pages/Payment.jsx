@@ -1,7 +1,6 @@
 import React from "react";
 import "../Styles/Payment.css";
 import ProductContext from "../ProductContext";
-import UserContext from "../UserContext";
 import { useContext } from "react";
 
 function Payment() {

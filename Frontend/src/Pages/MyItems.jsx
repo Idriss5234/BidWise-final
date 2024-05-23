@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import UserContext from "../UserContext";
 import { Link } from "react-router-dom";
-import { auth, db, storage } from "../firebase";
+import { db, storage } from "../firebase";
 import { collection, getDocs, onSnapshot } from "@firebase/firestore";
 import { ref, getDownloadURL } from "@firebase/storage";
 import MyItem from "../Components/MyItem";
@@ -35,7 +35,6 @@ const MyItems = () => {
               description: data.itemShortDescription,
               longdescription: data.itemDescription,
               price: data.TOPBID,
-              topbidder: data.TopBidder,
               enddate: data.endDate,
               image: imageUrl,
               owner: data.ItemOwner,
@@ -58,16 +57,16 @@ const MyItems = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]); // Include fetchData in the dependency array
 
   useEffect(() => {
     // Subscribe to real-time updates
-    const collectionRef = collection(db, 'itemdetails');
+    const collectionRef = collection(db, "itemdetails");
     const unsubscribe = onSnapshot(collectionRef, () => fetchData());
 
     // Unsubscribe from real-time updates on component unmount
     return () => unsubscribe();
-  }, [username]); // Re-run the effect if the username changes
+  }, [username, fetchData]); // Re-run the effect if the username or fetchData changes
 
   return (
     <div className="my-items">

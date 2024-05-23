@@ -1,8 +1,8 @@
 import React from "react";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Styles/SignUp.css";
-import google_logo from '../Images/google_logo.png';
+import google_logo from "../Images/google_logo.png";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { db } from "../firebase";
@@ -60,7 +60,7 @@ function SignUp() {
 
       alert("Registration successful!");
       //setUsername(Newname);
-      navigate('/BidWise/Login/'); //navigate to home
+      navigate("/BidWise/Login/"); //navigate to home
     } catch (error) {
       console.error("Registration unsuccessful", error);
       alert("Registration unsuccessful. Please try again.");
@@ -70,45 +70,80 @@ function SignUp() {
     <div className="signup">
       <h1 className="signup-headline">Create An Account</h1>
       <div className="signup-box">
-            <p className="signup-subheadline">Fill in the required informations to create your account</p>
+        <p className="signup-subheadline">
+          Fill in the required informations to create your account
+        </p>
 
-            <input type="text" className="input-field" placeholder="Name" id="name" onChange={onNameChange}/>
-            <input type="tel" className="input-field" placeholder="Phone Number" onChange={onNbrChange}/>
-            <input type="email" className="input-field" placeholder="Email" onChange={onEmailChange}/>
-            <input type="password" className="input-field" placeholder="Password" onChange={onPasswordChange}/>
-            <input type="password" className="input-field" placeholder="Confirm Password"/>
+        <input
+          type="text"
+          className="input-field"
+          placeholder="Name"
+          id="name"
+          onChange={onNameChange}
+        />
+        <input
+          type="tel"
+          className="input-field"
+          placeholder="Phone Number"
+          onChange={onNbrChange}
+        />
+        <input
+          type="email"
+          className="input-field"
+          placeholder="Email"
+          onChange={onEmailChange}
+        />
+        <input
+          type="password"
+          className="input-field"
+          placeholder="Password"
+          onChange={onPasswordChange}
+        />
+        <input
+          type="password"
+          className="input-field"
+          placeholder="Confirm Password"
+        />
 
-            <div className="checkboxs">
-                <label id="checkbox-label">
-                    <input type="checkbox" className="checkbox"/>
-                    <p className="checkbox-text">Notify me about new features and special offers</p>
-                </label>
-
-                <label id="checkbox-label">
-                    <input type="checkbox" className="checkbox"/>
-                    <p className="checkbox-text">I agree to the Terms of Service, General Terms and Conditions and Privacy Policy.</p>
-                </label>    
-            </div>
-            
-
-            <button id="signup-btn" onClick={onHandleRegister}>Sign Up</button>
-
-            <p className="signup-small-text">
-            Already have an account? <Link to="/BidWise/Login/" className="signup-link" id="login-link">Login</Link>
+        <div className="checkboxs">
+          <label id="checkbox-label">
+            <input type="checkbox" className="checkbox" />
+            <p className="checkbox-text">
+              Notify me about new features and special offers
             </p>
+          </label>
 
-            <div className="or-div">
-                <hr/>
-                <h1 id="or-text">Or</h1>
-                <hr/>
-            </div>
-
-            <button id="google-btn">
-            <img src={google_logo} alt="google" id="google-logo"/>
-            <span id="google-btn-text">Sign Up With Google</span>
-            </button>
-
+          <label id="checkbox-label">
+            <input type="checkbox" className="checkbox" />
+            <p className="checkbox-text">
+              I agree to the Terms of Service, General Terms and Conditions and
+              Privacy Policy.
+            </p>
+          </label>
         </div>
+
+        <button id="signup-btn" onClick={onHandleRegister}>
+          Sign Up
+        </button>
+
+        <p className="signup-small-text">
+          Already have an account?{" "}
+          <Link to="/BidWise/Login/" className="signup-link" id="login-link">
+            Login
+          </Link>
+        </p>
+
+        <div className="or-div">
+          <hr />
+          <h1 id="or-text">Or</h1>
+          <hr />
+        </div>
+
+        <button id="google-btn">
+          <img src={google_logo} alt="google" id="google-logo" />
+          <span id="google-btn-text">Sign Up With Google</span>
+        </button>
+      </div>
     </div>
   );
 }

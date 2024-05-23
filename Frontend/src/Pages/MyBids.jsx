@@ -1,18 +1,16 @@
-import { useState, useEffect, useContext } from "react";
-import UserContext from "../UserContext";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { auth, db, storage } from "../firebase";
+import UserContext from "../UserContext";
+import { db, storage } from "../firebase";
 import { collection, getDocs } from "@firebase/firestore";
 import { ref, getDownloadURL } from "@firebase/storage";
 import Product from "../Components/Product";
 import LostBid from "../Components/LostBid";
-
 import "../Styles/MyBids.css";
 import empty from "../Images/empty.png";
 
 const MyBids = () => {
-  const { username } = useContext(UserContext);
-  const { Solde } = useContext(UserContext);
+  const { username, Solde } = useContext(UserContext);
   const [productList, setProductList] = useState([]);
   const [lostBidsList, setLostBidsList] = useState([]);
 
@@ -29,7 +27,6 @@ const MyBids = () => {
         try {
           const imageUrl = await getDownloadURL(imageRef);
 
-          // Filter items where product.topbidder === username
           if (data.lostBidders.includes(username)) {
             lostBids.push({
               name: data.itemName,
@@ -55,7 +52,6 @@ const MyBids = () => {
     }
   };
 
-
   const fetchData = async () => {
     const collectionRef = collection(db, "itemdetails");
 
@@ -70,7 +66,6 @@ const MyBids = () => {
         try {
           const imageUrl = await getDownloadURL(imageRef);
 
-          // Filter items where product.topbidder === username
           if (data.TopBidder === username) {
             productsData.push({
               name: data.itemName,
@@ -99,9 +94,8 @@ const MyBids = () => {
   useEffect(() => {
     fetchData();
     fetchLostBids();
-  }, []);
+  }, [fetchData, fetchLostBids]); // Include fetchData and fetchLostBids in the dependency array
 
-  console.log(Solde, "solde");
   return (
     <div className="my-items">
       <h1 id="myitems-headline">My bids</h1>
@@ -137,9 +131,7 @@ const MyBids = () => {
         {lostBidsList.map((product, index) => (
           <LostBid key={index} product={product} />
         ))}
-        {productList.length === 0 && (
-          <p>You have no lost bids.</p>
-        )}
+        {lostBidsList.length === 0 && <p>You have no lost bids.</p>}
       </div>
     </div>
   );

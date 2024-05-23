@@ -20,7 +20,6 @@ import { query, where } from "firebase/firestore";
 import { arrayUnion, arrayRemove } from "firebase/firestore";
 
 const ProductDetails = () => {
-  const [soldee, setSoldee] = useState("");
   const [ownerEmail, setOwnerEmail] = useState("");
   const { setSolde, Solde } = useContext(UserContext);
   const { username } = useContext(UserContext);
@@ -63,9 +62,8 @@ const ProductDetails = () => {
       for (const doc of snapshot2.docs) {
         const data2 = doc.data();
         console.log(data2.name);
-        if (data2.name == username) {
+        if (data2.name === username) {
           console.log(data2.Solde, "solde page");
-          setSoldee(data2.Solde);
         }
       }
 
@@ -204,7 +202,7 @@ const ProductDetails = () => {
       <h1 id="product-details-h1">Product Details</h1>
 
       <div className="product-details-container">
-        <img src={product_img} alt="product-image" id="product-details-img" />
+        <img src={product_img} id="product-details-img" />
 
         <div className="product-details-info">
           <p id="product-id">{"ID: " + product_id}</p>
@@ -264,7 +262,9 @@ const ProductDetails = () => {
       <div className="product-owner-div">
         <h2 id="product-owner">Owner: </h2>
         <p id="product-owner-name">{product_owner}</p>
-        <a id="contact-owner" href={"mailto:" + ownerEmail}>Contact Owner</a>
+        <a id="contact-owner" href={"mailto:" + ownerEmail}>
+          Contact Owner
+        </a>
       </div>
 
       <p id="product-topbidder">

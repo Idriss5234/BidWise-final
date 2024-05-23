@@ -1,11 +1,8 @@
-import react from "react";
 import { useState, useEffect } from "react";
-import { auth, db, storage } from "../firebase";
+import { db, storage } from "../firebase";
 import { collection, getDocs } from "@firebase/firestore";
 import { ref, getDownloadURL } from "@firebase/storage";
 import Product from "./Product";
-import product1 from "../Images/product 1.png";
-import product2 from "../Images/product 2.png";
 
 import "../Styles/Products.css";
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import "../Styles/LostBid.css";
 import heart_normal from "../Images/heart-normal.svg";
 import heart_active from "../Images/heart-active.svg";
@@ -9,11 +9,54 @@ import { doc, deleteDoc } from "firebase/firestore";
 
 const LostBid = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(
+  const [remainingTime, setRemainingTime] = useState(() =>
     calculateRemainingTime(product.enddate)
   );
 
   const { setSelectedProduct } = useContext(ProductContext);
+
+  const calculateRemainingTime = useCallback(
+    (enddate) => {
+      const now = new Date().getTime();
+      const endTime = new Date(enddate).getTime();
+      let timeDiff = endTime - now;
+
+      if (timeDiff < 0) {
+        // If the time has already expired , set remaining time to 0
+        timeDiff = 0;
+      }
+
+      const totalSeconds = Math.floor(timeDiff / 1000);
+
+      const days = Math.min(Math.floor(totalSeconds / (24 * 3600)), 99);
+      const remainingSeconds = totalSeconds % (24 * 3600);
+      const hours = Math.floor(remainingSeconds / 3600);
+      const minutes = Math.floor((remainingSeconds % 3600) / 60);
+
+      const handleDelete = async () => {
+        const productDocRef = doc(db, "itemdetails", product.id);
+        try {
+          await deleteDoc(productDocRef);
+          alert("Item successfully deleted!");
+        } catch (error) {
+          alert("Error deleting item!");
+          console.error("Error removing Item: ", error);
+        }
+      };
+
+      if (days === 0 && hours === 0 && minutes === 0) {
+        handleDelete();
+      }
+
+      // Format values with leading zeros
+      const formattedDays = String(days).padStart(2, "0");
+      const formattedHours = String(hours).padStart(2, "0");
+      const formattedMinutes = String(minutes).padStart(2, "0");
+
+      return `${formattedDays}:${formattedHours}:${formattedMinutes}`;
+    },
+    [product]
+  );
 
   useEffect(() => {
     // Update remaining time every second
@@ -23,7 +66,7 @@ const LostBid = ({ product }) => {
 
     // Clear the interval on component unmount
     return () => clearInterval(intervalId);
-  }, [product.enddate]);
+  }, [product.enddate, calculateRemainingTime]);
 
   const handleBidClick = () => {
     setSelectedProduct(product);
@@ -32,49 +75,6 @@ const LostBid = ({ product }) => {
   const handleFavoriteClick = () => {
     setIsFavorite((prevState) => !prevState);
   };
-
-  function calculateRemainingTime(enddate) {
-    const now = new Date().getTime();
-    const endTime = new Date(enddate).getTime();
-    let timeDiff = endTime - now;
-
-    if (timeDiff < 0) {
-      // If the time has already expired , set remaining time to 0
-      timeDiff = 0;
-    }
-
-    const totalSeconds = Math.floor(timeDiff / 1000);
-
-    const days = Math.min(Math.floor(totalSeconds / (24 * 3600)), 99);
-    const remainingSeconds = totalSeconds % (24 * 3600);
-    const hours = Math.floor(remainingSeconds / 3600);
-    const minutes = Math.floor((remainingSeconds % 3600) / 60);
-
-    const handleDelete = async () => {
-      const productDocRef = doc(db, "itemdetails", product.id);
-      try {
-        await deleteDoc(productDocRef);
-        alert("Item successfully deleted!");
-      } catch (error) {
-        alert("Error deleting item!");
-        console.error("Error removing Item: ", error);
-      }
-    };
-
-    if (days === 0 && hours === 0 && minutes === 0) {
-      handleDelete();
-    }
-
-    //const seconds = remainingSeconds % 60;
-
-    // Format values with leading zeros
-    const formattedDays = String(days).padStart(2, "0");
-    const formattedHours = String(hours).padStart(2, "0");
-    const formattedMinutes = String(minutes).padStart(2, "0");
-    //const formattedSeconds = String(seconds).padStart(2, '0');
-
-    return `${formattedDays}:${formattedHours}:${formattedMinutes}`;
-  }
 
   return (
     <div className="product">
@@ -94,9 +94,9 @@ const LostBid = ({ product }) => {
               : `${product.name.slice(0, 14)}...`}
           </h1>
           <p id="product-description">
-            {product.name.length <= 60
-              ? product.name
-              : `${product.name.slice(0, 60)}...`}
+            {product.description.length <= 60
+              ? product.description
+              : `${product.description.slice(0, 60)}...`}
           </p>
         </div>
 

@@ -17,7 +17,6 @@ import down_hover from "../Images/down-arrow-hover.svg";
 import my_items from "../Images/item.png";
 import my_bids from "../Images/auction.png";
 import settings from "../Images/setting.png";
-import { set } from "react-hook-form";
 
 const Navbar = () => {
   //get the username from useContext
@@ -30,7 +29,7 @@ const Navbar = () => {
     //logout the user
     alert("Logged out");
     setUsername("");
-    navigate("/BidWise/")
+    navigate("/BidWise/");
   };
 
   // States to manage dropdown visibility
